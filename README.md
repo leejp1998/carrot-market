@@ -48,3 +48,31 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 Open [http://localhost:5555](http://localhost:5555) with your browser to see the database.
+
+## Tech stacks used
+
+#### Full-stack
+
+NextJS 14
+
+#### DB
+
+PostgreSql
+
+#### ORM
+
+Prisma
+
+#### Styling
+
+Tailwind CSS
+
+#### Image storage
+
+Amazon S3 (planned)
+
+#### Image resizer
+
+TBD
+
+####
