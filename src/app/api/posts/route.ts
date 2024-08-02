@@ -5,10 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
-  const { title, price, contactInfo, username, password } =
+  const { title, items, contactInfo, username, password } =
     await request.json();
-
-  const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
     // Check if the user already exists
@@ -39,10 +37,19 @@ export async function POST(request: NextRequest) {
     const post = await prisma.post.create({
       data: {
         title,
-        price,
         contactInfo,
         expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 1 week from now
         userId: user.id,
+        items: {
+          create: items.map((item: any) => ({
+            name: item.name,
+            price: item.price,
+            image: item.image,
+          })),
+        },
+      },
+      include: {
+        items: true,
       },
     });
 
@@ -61,12 +68,16 @@ export async function GET() {
           gt: new Date(),
         },
       },
+      include: {
+        items: true,
+      },
       orderBy: {
         createdAt: "desc",
       },
     });
     return NextResponse.json(posts);
   } catch (error) {
+    console.error("Error fetching posts:", error);
     return NextResponse.json(
       { error: "Error fetching posts" },
       { status: 500 }

@@ -92,7 +92,7 @@ export default function EditPost({ params }: { params: { id: string } }) {
             htmlFor="contactInfo"
             className="block"
           >
-            Contact Info
+            Contact or KakaoId
           </label>
           <input
             type="text"
